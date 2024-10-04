@@ -309,7 +309,7 @@ class RECompiler(SymbolRECompiler):
         elif c == '.':
             return CharacterSet.ANY
         elif c == '[':
-            if self.peekChar() == '~':
+            if self.peekChar() == '^':
                 self.readChar()
                 return self.readCSetInnards().complement()
             else:

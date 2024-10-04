@@ -49,6 +49,9 @@ class TestParseRE(unittest.TestCase):
         self.assertTrue(compileRE(r'.').accepts('a'))
         self.assertFalse(compileRE(r'\.').accepts('a'))
 
+        self.assertFalse(compileRE(r'[^a]').accepts('a'))
+        self.assertTrue(compileRE(r'[^a]').accepts('b'))
+
 
     def testCustomNumberOfOccurrences(self):
         from reCompiler import compileRE
