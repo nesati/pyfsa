@@ -841,8 +841,10 @@ def iteration(fsa, min=1, max=None):
         return concatenation(fsa, iteration(fsa, min=min - 1, max=(max and max - 1)))
     elif max:
         return option(concatenation(fsa, iteration(fsa, min=min, max=max - 1)))
-    else:
+    elif max is None:
         return closure(fsa)
+    else:
+        return EMPTY_STRING_FSA
 
 def option(fsa):
     return union(fsa, EMPTY_STRING_FSA)
