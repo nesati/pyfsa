@@ -47,6 +47,7 @@ class TestParseRE(unittest.TestCase):
         self.assertFalse(compileRE('[0-5]').accepts('7'))
 
         self.assertTrue(compileRE('a{1,3}').accepts('aa'))
+        self.assertTrue(compileRE('a{3}').accepts('aaa'))
 
 if __name__ == '__main__':
     unittest.main()

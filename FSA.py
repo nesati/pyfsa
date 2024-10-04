@@ -840,7 +840,7 @@ def iteration(fsa, min=1, max=None):
     if min:
         return concatenation(fsa, iteration(fsa, min=min - 1, max=(max and max - 1)))
     elif max:
-        return option(concatenation(fsa), iteration(fsa, min=min, max=max - 1))
+        return option(concatenation(fsa, iteration(fsa, min=min, max=max - 1)))
     else:
         return closure(fsa)
 

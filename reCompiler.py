@@ -89,7 +89,36 @@ class SymbolRECompiler:
         while self.peekToken() and self.peekToken() not in (')', '|', '&'):
             fsa = FSA.concatenation(fsa, self.compileItem())
         return fsa
-    
+
+    def readNumber(self):
+        num = 0
+        while self.peekChar() and self.peekChar() in '0123456789':
+            c = self.readChar()
+            num *= 10
+            num += int(c)
+        return num
+
+    def readRange(self):
+        # read first digit
+        n_min = self.readNumber()
+
+        if not self.peekChar():
+            raise "unclosed }"
+
+        if self.peekChar() in '}':
+            self.readChar()
+
+            return n_min, n_min
+
+        assert self.readChar() == ',', "unclosed }"
+
+        # read second digit
+        n_max = self.readNumber()
+
+        assert self.readChar() == '}', "unclosed }"
+
+        return n_min, n_max
+
     def compileItem(self):
         startPosition = self.index
         c = self.readToken()
@@ -101,7 +130,7 @@ class SymbolRECompiler:
             fsa = FSA.complement(self.compileItem())
         else:
             fsa = FSA.singleton(c, arcMetadata=self.recordSourcePositions and [startPosition])
-        while self.peekChar() and self.peekChar() in '?*+':
+        while self.peekChar() and self.peekChar() in '?*+{':
             c = self.readChar()
             if c == '*':
                 fsa = FSA.closure(fsa)
@@ -109,6 +138,9 @@ class SymbolRECompiler:
                 fsa = FSA.union(fsa, FSA.EMPTY_STRING_FSA)
             elif c == '+':
                 fsa = FSA.iteration(fsa)
+            elif c == '{':
+                n_min, n_max = self.readRange()
+                fsa = FSA.iteration(fsa, n_min, n_max)
             else:
                 raise 'program error'
         return fsa
