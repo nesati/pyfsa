@@ -34,5 +34,19 @@ class TestFSA(unittest.TestCase):
         fsa = concatenation(singleton("a"),closure(singleton("b")))
         self.assertFalse(fsa.accepts("b"))
 
+class TestParseRE(unittest.TestCase):
+    def testBasic(self):
+        from reCompiler import compileRE
+
+        odd_len = compileRE(".(..)*")
+        self.assertFalse(odd_len.isEmpty())
+        self.assertTrue(odd_len.accepts("aaa"))
+        self.assertFalse(odd_len.accepts("aaaa"))
+
+        self.assertTrue(compileRE('[0-5]').accepts('3'))
+        self.assertFalse(compileRE('[0-5]').accepts('7'))
+
+        self.assertTrue(compileRE('a{1,3}').accepts('aa'))
+
 if __name__ == '__main__':
     unittest.main()
