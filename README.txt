@@ -10,3 +10,10 @@ expression productions into a chart parser.
 See the FSA_ module documentation for more information.
 
 .. _FSA: FSA.html
+
+About this fork
+---------------
+
+This fork improves regex syntax support. Notably:
+- custom number of occurrences quantifier (e.g.: a{1,3})
+- metacharacters in sets (e.g. [a-z\d])
