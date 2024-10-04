@@ -285,7 +285,13 @@ class CharacterSet:
 METACHARS = {
         'd': CharacterSet('0-9'),
         's': CharacterSet(' \t\n\r\f\v'),
-        'w': CharacterSet('a-zA-Z0-9')}
+        'w': CharacterSet('a-zA-Z0-9'),
+        't': CharacterSet('\t'),
+        'n': CharacterSet('\n'),
+        'r': CharacterSet('\r'),
+        'f': CharacterSet('\f'),
+        'v': CharacterSet('\v'),
+}
 METACHARS['D'] = METACHARS['d'].complement()
 METACHARS['S'] = METACHARS['s'].complement()
 METACHARS['W'] = METACHARS['w'].complement()

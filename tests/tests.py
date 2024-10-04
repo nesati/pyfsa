@@ -46,6 +46,9 @@ class TestParseRE(unittest.TestCase):
         self.assertTrue(compileRE('[0-5]').accepts('3'))
         self.assertFalse(compileRE('[0-5]').accepts('7'))
 
+        self.assertTrue(compileRE(r'.').accepts('a'))
+        self.assertFalse(compileRE(r'\.').accepts('a'))
+
 
     def testCustomNumberOfOccurrences(self):
         from reCompiler import compileRE
@@ -70,6 +73,11 @@ class TestParseRE(unittest.TestCase):
 
         self.assertTrue(compileRE(r'\w+').accepts('aa'))
         self.assertTrue(compileRE(r'[\w]+').accepts('aa'))
+        self.assertFalse(compileRE(r'[\w]+').accepts('a a'))
+
+        self.assertTrue(compileRE(r'\t').accepts('\t'))
+        self.assertTrue(compileRE(r'[\t]').accepts('\t'))
+        self.assertFalse(compileRE(r'[\t]').accepts('\v'))
 
 if __name__ == '__main__':
     unittest.main()
