@@ -328,6 +328,9 @@ class RECompiler(SymbolRECompiler):
             if self.peekChar() == '-':
                 self.readChar()
                 cset = cset.union(CharacterSet([(c, self.readChar())]))
+            elif c == '\\' and self.peekChar() in METACHARS:
+                c = self.readChar()
+                cset = cset.union(METACHARS[c])
             else:
                 cset = cset.union(CharacterSet([(c, c)]))
 

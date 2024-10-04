@@ -65,5 +65,11 @@ class TestParseRE(unittest.TestCase):
         self.assertFalse(compileRE('a{3}').accepts('aaaa'))
         self.assertTrue(compileRE('a{3}').accepts('aaa'))
 
+    def testMetacharactersInSet(self):
+        from reCompiler import compileRE
+
+        self.assertTrue(compileRE(r'\w+').accepts('aa'))
+        self.assertTrue(compileRE(r'[\w]+').accepts('aa'))
+
 if __name__ == '__main__':
     unittest.main()
